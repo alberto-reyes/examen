@@ -1,25 +1,26 @@
 package com.example.examen.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.examen.dto.NuevaOrdenRequest;
 import com.example.examen.dto.OrdenDto;
+import com.example.examen.dto.ProductoDto;
 import com.example.examen.entidades.Orden;
-import com.example.examen.entidades.Producto;
 import com.example.examen.mapper.OrdenMapper;
 import com.example.examen.mapper.ProductoMapper;
 import com.example.examen.repository.OrdenRepository;
 import com.example.examen.repository.ProductoRepository;
 import com.example.examen.repository.SucursalRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+
 @Service
+@AllArgsConstructor
 public class OrdenService {
 
     private OrdenRepository ordenRepository;
@@ -31,12 +32,16 @@ public class OrdenService {
 
     @Transactional
     public OrdenDto nuevaOrden(NuevaOrdenRequest request){
+        var sucursal = sucursalRepository
+            .findById(request.getSucursalId())
+            .orElseThrow(() -> new EntityNotFoundException("Sucursal no encontrada con id " + request.getSucursalId()));
 
-        Double total = 0.0;
+        Double total = request.getProductos()
+            .stream()
+            .mapToDouble(ProductoDto::getPrecio)
+            .sum();
 
-        var sucursal = sucursalRepository.findById(request.getSucursalId()).orElse(null);
-
-        Orden orden = new Orden();
+        var orden = new Orden();
         orden.setFecha(LocalDateTime.now());
         orden.setSucursal(sucursal);
         orden.setTotal(total);
@@ -54,6 +59,12 @@ public class OrdenService {
 
         return ordenMapper.toDto(nuevaOrden);
 
+    }
+
+    public OrdenDto consultaOrden(Long id) {
+        var orden = ordenRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("No se encontro la orden con el id " + id));
+        return ordenMapper.toDto(orden);
     }
 
 }

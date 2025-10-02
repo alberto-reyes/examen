@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "ec265021-f00e-40f3-9651-6244959df65b",
+		"name": "Examen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12269982"
+	},
+	"item": [
+		{
+			"name": "token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\":\"snoopy\",\r\n    \"password\": \"111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nueva orden",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzbm9vcHkiLCJpYXQiOjE3NTkzNjQ0MjQsImV4cCI6NDQzNTEzMzY2ODg5MzE4N30.Mb0crTCx6cWapbL32ZNYWnubMMnoOwj4T6tHgk3aTszXFAhXOUDTa0dizvo1Krwb",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sucursalId\": 1,\r\n    \"productos\": [{\r\n        \"codigo\": \"18156\",\r\n        \"descripcion\": \"Esmeriladora angular \",\r\n        \"precio\": 625\r\n    },{\r\n        \"codigo\": \"17193\",\r\n        \"descripcion\": \" Pala redonda\",\r\n        \"precio\": 100.50\r\n    }]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/orden",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"orden"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta Orden",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzbm9vcHkiLCJpYXQiOjE3NTkzNjM1NDAsImV4cCI6NDQzNTA1NzI4MTA5Nzk4N30.sKx6qkfXweYarDHoDp2M8fYAzqITpXnjeI8-qZ2pr2MplDl4xO0C8A7bgjuaDl4z",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/orden/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"orden",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

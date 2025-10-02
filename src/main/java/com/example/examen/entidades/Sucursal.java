@@ -22,7 +22,7 @@ public class Sucursal {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     private String nombre;
 
 

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class OrdenDto {
 
+    private Long id;
     private LocalDateTime fecha;
     private Double total;
     private SucursalDto sucursal;

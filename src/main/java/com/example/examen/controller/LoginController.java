@@ -12,6 +12,7 @@ import com.example.examen.auth.JwtService;
 import com.example.examen.dto.LoginRequest;
 import com.example.examen.dto.TokenDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -24,7 +25,7 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginRequest logginRequest){
+    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequest logginRequest){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logginRequest.getUser(), logginRequest.getPassword()));
 
         var token = jwtService.generateToken(logginRequest.getUser());
